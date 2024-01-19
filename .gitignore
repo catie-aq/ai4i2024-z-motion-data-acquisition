@@ -1,4 +1,4 @@
 *.pyc
 __pycache__
-!acquired_data/.gitkeep
 acquired_data/*
+!acquired_data/.gitkeep
