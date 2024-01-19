@@ -163,7 +163,7 @@ class SensorHandler():
         self._rx_buffer = bytearray()
 
         self._reconnect = True
-        self._ref_timestamp = time.time()
+        self._ref_timestamp = 0
 
         self._is_streaming_data = False
         
@@ -240,6 +240,8 @@ class SensorHandler():
         # Enable desired notifications
         await self._sensor.enable_notifications("00002a19-0000-1000-8000-00805f9b34fb", self.on_battery_level_notification) # Battery Level characteristic
         await self._sensor.enable_notifications("6e400003-b5a3-f393-e0a9-e50e24dcca9e", self.on_rx_stream_notification) # Stream service receive characteristic
+
+        self._ref_timestamp = time.time()
 
         # Logger activation / information
         if self._csv_logger:
@@ -451,7 +453,7 @@ async def run():
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("sensor_local_name", metavar="BLE_SENSOR_NAME", help="sensor to connect to")
+    parser.add_argument("sensor_local_name", metavar="BLE_SENSOR_NAME", help="Usage example : python data_acquisition.py \"6TRON Sensor 1\" --output-dir acquired_data/ --files-prefix 1_ --stream-config 1")
     parser.add_argument("--stream-config", type=str, help="stream config: 1, 2 or 3", required=True)
     parser.add_argument("--output-dir", type=str, help="output dir path", required=True)
     parser.add_argument("--files-prefix", type=str, help="output log files prefix", required=True)
