@@ -451,7 +451,7 @@ async def run():
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("sensor_local_name", metavar="BLE_SENSOR_NAME", help="sensor to connect to")
+    parser.add_argument("sensor_local_name", metavar="BLE_SENSOR_NAME", help="Usage example : python data_acquisition.py \"6TRON Sensor 1\" --output-dir acquired_data/ --files-prefix 1_ --stream-config 1")
     parser.add_argument("--stream-config", type=str, help="stream config: 1, 2 or 3", required=True)
     parser.add_argument("--output-dir", type=str, help="output dir path", required=True)
     parser.add_argument("--files-prefix", type=str, help="output log files prefix", required=True)
