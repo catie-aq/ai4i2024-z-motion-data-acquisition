@@ -143,6 +143,8 @@ class BleSensor():
 
 
 
+PRECISION = 6
+
 
 class SensorHandler():
 
@@ -184,15 +186,15 @@ class SensorHandler():
 
         t = round(time.time() - self._ref_timestamp, 4)
         if self._stream_config == 0:
-            accX = round(float(int.from_bytes(data[1:3], byteorder='little', signed=True)/100.0), 3)
-            accY = round(float(int.from_bytes(data[3:5], byteorder='little', signed=True)/100.0), 3)
-            accZ = round(float(int.from_bytes(data[5:7], byteorder='little', signed=True)/100.0), 3)
-            gyrX = round(float(int.from_bytes(data[7:9], byteorder="little", signed=True)/100.0), 3)
-            gyrY = round(float(int.from_bytes(data[9:11], byteorder="little", signed=True)/100.0), 3)
-            gyrZ = round(float(int.from_bytes(data[11:13], byteorder="little", signed=True)/100.0), 3)
-            magX = round(float(int.from_bytes(data[13:15], byteorder="little", signed=True)/100.0), 3)
-            magY = round(float(int.from_bytes(data[15:17], byteorder="little", signed=True)/100.0), 3)
-            magZ = round(float(int.from_bytes(data[17:19], byteorder="little", signed=True)/100.0), 3)
+            accX = round(float(int.from_bytes(data[1:3], byteorder='little', signed=True)/100.0), PRECISION)
+            accY = round(float(int.from_bytes(data[3:5], byteorder='little', signed=True)/100.0), PRECISION)
+            accZ = round(float(int.from_bytes(data[5:7], byteorder='little', signed=True)/100.0), PRECISION)
+            gyrX = round(float(int.from_bytes(data[7:9], byteorder="little", signed=True)/100.0), PRECISION)
+            gyrY = round(float(int.from_bytes(data[9:11], byteorder="little", signed=True)/100.0), PRECISION)
+            gyrZ = round(float(int.from_bytes(data[11:13], byteorder="little", signed=True)/100.0), PRECISION)
+            magX = round(float(int.from_bytes(data[13:15], byteorder="little", signed=True)/100.0), PRECISION)
+            magY = round(float(int.from_bytes(data[15:17], byteorder="little", signed=True)/100.0), PRECISION)
+            magZ = round(float(int.from_bytes(data[17:19], byteorder="little", signed=True)/100.0), PRECISION)
             row = [t, accX, accY, accZ, gyrX, gyrY, gyrZ, magX, magY, magZ]
             if self._verbose:
                 term_display(row)
@@ -200,12 +202,12 @@ class SensorHandler():
                 self._csv_logger.write(row)
 
         elif self._stream_config == 1:
-            accX = round(float(int.from_bytes(data[1:3], byteorder='little', signed=True)/100.0), 3)
-            accY = round(float(int.from_bytes(data[3:5], byteorder='little', signed=True)/100.0), 3)
-            accZ = round(float(int.from_bytes(data[5:7], byteorder='little', signed=True)/100.0), 3)
-            yaw = round(float(int.from_bytes(data[7:9], byteorder="little", signed=True)/100.0), 3)
-            pitch = round(float(int.from_bytes(data[9:11], byteorder="little", signed=True)/100.0), 3)
-            roll = round(float(int.from_bytes(data[11:13], byteorder="little", signed=True)/100.0), 3)
+            accX = round(float(int.from_bytes(data[1:3], byteorder='little', signed=True)/100.0), PRECISION)
+            accY = round(float(int.from_bytes(data[3:5], byteorder='little', signed=True)/100.0), PRECISION)
+            accZ = round(float(int.from_bytes(data[5:7], byteorder='little', signed=True)/100.0), PRECISION)
+            yaw = round(float(int.from_bytes(data[7:9], byteorder="little", signed=True)/100.0), PRECISION)
+            pitch = round(float(int.from_bytes(data[9:11], byteorder="little", signed=True)/100.0), PRECISION)
+            roll = round(float(int.from_bytes(data[11:13], byteorder="little", signed=True)/100.0), PRECISION)
             row = [t, accX, accY, accZ, yaw, pitch, roll]
             if self._verbose:
                 term_display(row)
@@ -213,13 +215,13 @@ class SensorHandler():
                 self._csv_logger.write(row)
 
         elif self._stream_config == 2:
-            accX = round(float(int.from_bytes(data[1:3], byteorder='little', signed=True)/100.0), 3)
-            accY = round(float(int.from_bytes(data[3:5], byteorder='little', signed=True)/100.0), 3)
-            accZ = round(float(int.from_bytes(data[5:7], byteorder='little', signed=True)/100.0), 3)
-            qW = round(float(int.from_bytes(data[7:9], byteorder="little", signed=True)/16384), 3)
-            qX = round(float(int.from_bytes(data[9:11], byteorder="little", signed=True)/16384), 3)
-            qY = round(float(int.from_bytes(data[11:13], byteorder="little", signed=True)/16384), 3)
-            qZ = round(float(int.from_bytes(data[13:15], byteorder="little", signed=True)/16384), 3)
+            accX = round(float(int.from_bytes(data[1:3], byteorder='little', signed=True)/100.0), PRECISION)
+            accY = round(float(int.from_bytes(data[3:5], byteorder='little', signed=True)/100.0), PRECISION)
+            accZ = round(float(int.from_bytes(data[5:7], byteorder='little', signed=True)/100.0), PRECISION)
+            qW = round(float(int.from_bytes(data[7:9], byteorder="little", signed=True)/16384), PRECISION)
+            qX = round(float(int.from_bytes(data[9:11], byteorder="little", signed=True)/16384), PRECISION)
+            qY = round(float(int.from_bytes(data[11:13], byteorder="little", signed=True)/16384), PRECISION)
+            qZ = round(float(int.from_bytes(data[13:15], byteorder="little", signed=True)/16384), PRECISION)
             row = [t, accX, accY, accZ, qW, qX, qY, qZ]
             if self._verbose:
                 term_display(row)
