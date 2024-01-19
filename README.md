@@ -6,7 +6,7 @@ Script permettant la capture et l'enregistrement de données transmises par la c
 
 ## Installation
 
-Dans un environnement virtuel python dédié, effectuer :
+Dans un environnement virtuel python python 3.8 dédié, effectuer :
 
 ```
 pip install -r requirements.txt
@@ -22,7 +22,7 @@ Appuyer de nouveau sur [espace] pour interrompre l'enregistrement.
 
 Un nouvel appui sur [espace] relancera l'enregistrement dans un nouveau fichier CSV et ainsi de suite...
 
-Une fois la session de travail terminée, appuyer sur [ctrl+c] pour quitter le programme.
+Une fois la session de travail terminée, appuyer sur [q] puis [ctrl+c] pour quitter le programme.
 
 Dans tous les cas, suivre les instructions affichées dans le terminal.
 
