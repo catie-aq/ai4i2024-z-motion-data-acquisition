@@ -51,4 +51,29 @@ Enregistre une série de fichiers CSV dans le répertoire acquired_data/.
 Ces fichiers seront respectivement nommés : 1_1.csv, 1_2.csv, 1_3.csv...
 
 
+## Configurations disponibles pour la collecte des données
+
+La configuration STREAM_CONFIG définit le format de collecte des données.
+
+Trois options sont possibles, avec à chaque fois la sortie des valeurs d'accélération brute x, y et z, mais en plus, selon le cas, l'ajout d'informations supplémentaires :
+
+1/ Accélaration brute + vitesse de rotation + champ magnétique
+
+```
+t,raw_acceleration_x,raw_acceleration_y,raw_acceleration_z,rotation_speed_x,rotation_speed_y,rotation_speed_z,magnetic_field_x,magnetic_field_y,magnetic_field_z
+```
+
+2/ Accélaration brute + angles d'Euler
+
+```
+ t,raw_acceleration_x,raw_acceleration_y,raw_acceleration_z,yaw,pitch,roll
+```
+
+3/ Accélaration brute + quaternion
+
+
+# 2 :
+# 3 : t,raw_acceleration_x,raw_acceleration_y,raw_acceleration_z,quaternion_w,quaternion_x,quaternion_y,quaternion_z
+```
+
 ## Troubleshooting
