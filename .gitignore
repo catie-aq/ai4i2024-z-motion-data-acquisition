@@ -3,3 +3,4 @@ __pycache__
 acquired_data/*
 !acquired_data/.gitkeep
 data/
+.ipynb_checkpoints/
