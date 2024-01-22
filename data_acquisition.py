@@ -184,7 +184,7 @@ class SensorHandler():
             term_display("Config values not matching : %s <-> %s" % (config, self._stream_config))
             exit(0)
 
-        t = round(time.time() - self._ref_timestamp, 4)
+        t = round(time.time() - self._ref_timestamp, 6)
         if self._stream_config == 0:
             accX = round(float(int.from_bytes(data[1:3], byteorder='little', signed=True)/100.0), PRECISION)
             accY = round(float(int.from_bytes(data[3:5], byteorder='little', signed=True)/100.0), PRECISION)
