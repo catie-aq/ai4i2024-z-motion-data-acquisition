@@ -100,3 +100,8 @@ quaternion_z
 ```
 
 ## Troubleshooting
+
+1/ Le script d'acquisition proposé ici ne fonctionne que sous Linux.
+
+2/ Assurez vous de le mettre en oeuvre dans un environnement python >= 3.8, et n'oubliez pas d'installer les requirements.
+
