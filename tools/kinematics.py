@@ -98,27 +98,9 @@ def compute_velocity_position(
     for ii in range(normalized_acc_data.shape[1]):
         dt = timestamp_data.diff().fillna(0)
         # velocity_data[:,ii] = (raw_acceleration_data.iloc[:, ii] * dt).cumsum()
-        velocity_data[:,ii] = scipy.integrate.cumtrapz(normalized_acc_data[:,ii], dx=mean_timestamp_delta, initial=0)
         # position_data[:,ii] = (velocity_data[:, ii] * dt).cumsum()
-        position_data[:,ii] = scipy.integrate.cumtrapz(velocity_data[:,ii], dx=mean_timestamp_delta, initial=initial_position[ii])
+        velocity_data[:,ii] = scipy.integrate.cumtrapz(normalized_acc_data[:,ii], timestamp_data, initial=0)
+        position_data[:,ii] = scipy.integrate.cumtrapz(velocity_data[:,ii], timestamp_data, initial=initial_position[ii])
     return (velocity_data, position_data)
 
 
-
-
-
-    # normalized_acc_data = normalize_acceleration_data_quat(raw_acceleration_data, quaternion_data)
-
-    # velocity_data = np.nan*np.ones_like(normalized_acc_data)
-    # position_data = np.nan*np.ones_like(normalized_acc_data)
-
-    # mean_timestamp_delta = timestamp_data.diff().dropna().mean()
-
-    # initial_position = np.zeros(3)
-
-    # for ii in range(normalized_acc_data.shape[1]):
-    #     velocity_data[:,ii] = scipy.integrate.cumtrapz(normalized_acc_data[:,ii], dx=mean_timestamp_delta, initial=0)
-    #     position_data[:,ii] = scipy.integrate.cumtrapz(velocity_data[:,ii], dx=mean_timestamp_delta, initial=initial_position[ii])
-
-
-    # return (velocity_data, position_data)
