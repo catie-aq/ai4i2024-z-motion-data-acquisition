@@ -2,9 +2,10 @@
 
 ## Présentation générale
 
-Script permettant la capture et l'enregistrement de données transmises par la centrale inertielle Z_Motion développée dans le cadre du projet [6TRON](https://6tron.io) porté par le [Centre Aquitain des Technologies de l'Information et Electroniques](https://www.catie.fr) (CATIE).
+Script permettant la capture et l'enregistrement de données transmises par la centrale inertielle [Z_Motion](https://6tron.io/z_motion/) développée dans le cadre du projet [6TRON](https://6tron.io) porté par le [Centre Aquitain des Technologies de l'Information et Electroniques](https://www.catie.fr) (CATIE).
 
-## Installation
+
+## Préparation de l'environnement / installation
 
 Dans un environnement virtuel python python 3.8 dédié, effectuer :
 
@@ -60,20 +61,47 @@ Trois options sont possibles, avec à chaque fois la sortie des valeurs d'accél
 1/ Accélaration brute + vitesse de rotation + champ magnétique
 
 ```
-t,raw_acceleration_x,raw_acceleration_y,raw_acceleration_z,rotation_speed_x,rotation_speed_y,rotation_speed_z,magnetic_field_x,magnetic_field_y,magnetic_field_z
+t                   [s]
+raw_acceleration_x  [m/s^2]
+raw_acceleration_y  [m/s^2]
+raw_acceleration_z  [m/s^2]
+rotation_speed_x    [rad/s]
+rotation_speed_y    [rad/s]
+rotation_speed_z    [rad/s]
+magnetic_field_x    [uT]
+magnetic_field_y    [uT]
+magnetic_field_z    [uT]
+
 ```
 
 2/ Accélaration brute + angles d'Euler
 
 ```
- t,raw_acceleration_x,raw_acceleration_y,raw_acceleration_z,yaw,pitch,roll
+ t                  [s]
+ raw_acceleration_x [m/s^2]
+ raw_acceleration_y [m/s^2]
+ raw_acceleration_z [m/s^2]
+ yaw                [rad]
+ pitch              [rad]
+ roll               [rad]
 ```
 
 3/ Accélaration brute + quaternion
 
-
-# 2 :
-# 3 : t,raw_acceleration_x,raw_acceleration_y,raw_acceleration_z,quaternion_w,quaternion_x,quaternion_y,quaternion_z
+```
+t                  [s]
+raw_acceleration_x [m/s^2]
+raw_acceleration_y [m/s^2]
+raw_acceleration_z [m/s^2]
+quaternion_w
+quaternion_x
+quaternion_y
+quaternion_z
 ```
 
 ## Troubleshooting
+
+1/ Le script d'acquisition proposé ici ne fonctionne que sous Linux.
+
+2/ Assurez vous de le mettre en oeuvre dans un environnement python >= 3.8, et n'oubliez pas d'installer les requirements.
+
