@@ -5,42 +5,57 @@
 
 import os, argparse
 
-import pandas
+import numpy as np
+
+import pandas as pd
+
+import scipy
+
+from skinematics import quat, vector
+
 import matplotlib.pyplot as plt
 
-from tools.kinematics import normalize_acceleration_data_quat, compute_velocity_position
-from tools.filtering import butter_highpass_filter, filtfilt, zero_if_under_threshold
-from tools.visualization import plot_time_domain, plot_3d
 
 
-def read_data_from(csv_file_path_name):
-    data = pandas.read_csv(csv_file_path_name, delimiter=",", skiprows=0)
-    return data
-
-def inspect_recorded_data(
-    csv_file_path_name
-    ):
+def inspect_recorded_data(csv_file_path_name):
     csv_file_name = os.path.basename(csv_file_path_name)
-    data = read_data_from(csv_file_path_name)
-    t_data = data['t']
-    t_ref = data['t'].iloc[0]
-    data['t'] = data['t'] - t_ref
+    data = pd.read_csv(csv_file_path_name, delimiter=",", skiprows=0)
+
+    timestamp_data = data['t']
+    t_ref = timestamp_data.iloc[0]
+    timestamp_data = timestamp_data - t_ref
 
     raw_acceleration_data = data[["raw_acceleration_x", "raw_acceleration_y", "raw_acceleration_z"]]
     quaternion_data = data[["quaternion_w", "quaternion_x", "quaternion_y", "quaternion_z"]]
-    normalized_acceleration_data = normalize_acceleration_data_quat(raw_acceleration_data, quaternion_data)
 
-    plt.plot(data['t'], raw_acceleration_data)
+    # g = scipy.constants.g   # 9.80665
+    g = 9.81   # to be ajusted / recomputed
+
+    g_v = np.r_[0, 0, g]
+
+    linear_acceleration_data = raw_acceleration_data - vector.rotate_vector(g_v, quat.q_inv(quaternion_data))
+    normalized_acceleration_data = vector.rotate_vector(linear_acceleration_data, quaternion_data)
+
+    plt.plot(timestamp_data, raw_acceleration_data)
+    plt.title("%s / raw acceleration data" % csv_file_name)
     plt.show()
 
-    plt.plot(data['t'], normalized_acceleration_data)
+    plt.plot(timestamp_data, normalized_acceleration_data)
+    plt.title("%s / normalized acceleration data" % csv_file_name)
     plt.show()
 
-    normalized_acceleration_data = filtfilt(normalized_acceleration_data, 2, 1)
-    normalized_acceleration_data = zero_if_under_threshold(normalized_acceleration_data, 1.0)
+    initial_position = np.zeros(3)
+    velocity_data = np.nan*np.ones_like(normalized_acceleration_data)
+    position_data = np.nan*np.ones_like(normalized_acceleration_data)
 
-    velocity_data, position_data = compute_velocity_position(raw_acceleration_data, quaternion_data, t_data)
-    plot_3d(position_data, "%s / computed position" % csv_file_name)
+    for ii in range(normalized_acceleration_data.shape[1]):
+        velocity_data[:,ii] = scipy.integrate.cumtrapz(normalized_acceleration_data[:,ii], timestamp_data, initial=0)
+        position_data[:,ii] = scipy.integrate.cumtrapz(velocity_data[:,ii], timestamp_data, initial=initial_position[ii])
+
+    ax = plt.axes(projection='3d')
+    ax.scatter3D(position_data[:,0] ,position_data[:,1], position_data[:,2], c=position_data[:,2], cmap='twilight')
+    ax.set_title("%s / computed position" % csv_file_name)
+
     plt.show()
 
 
